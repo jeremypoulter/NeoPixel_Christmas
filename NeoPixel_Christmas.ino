@@ -5,7 +5,7 @@
 #include "NeoPixelPattern.h"
 
 #include <MicroTasks/MicroTasks.h>
-#include <MicroTasks/Interrupt.h>
+#include <MicroTasks/ButtonEvent.h>
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 
@@ -41,7 +41,7 @@ NeoPixelPattern *patterns[] =
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
 
-Interrupt buttonEvent(0, FALLING);
+ButtonEvent buttonEvent(0, FALLING);
 
 class SwitchPattern : public Task
 {
