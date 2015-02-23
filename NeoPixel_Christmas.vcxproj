@@ -80,12 +80,14 @@
   <ItemGroup>
     <ClInclude Include="ColourWipe.h" />
     <ClInclude Include="NeoPixelPattern.h" />
+    <ClInclude Include="Rainbow.h" />
     <ClInclude Include="TheaterChase.h" />
     <ClInclude Include="Visual Micro\.NeoPixel_Christmas.vsarduino.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ColourWipe.cpp" />
     <ClCompile Include="NeoPixelPattern.cpp" />
+    <ClCompile Include="Rainbow.cpp" />
     <ClCompile Include="TheaterChase.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
