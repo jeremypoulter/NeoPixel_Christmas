@@ -26,7 +26,7 @@ class Rainbow : public NeoPixelPattern
     }
 
     void setup();
-    unsigned long loop(WakeReason reason);
+    virtual unsigned long loop(WakeReason reason);
 };
 
 #endif

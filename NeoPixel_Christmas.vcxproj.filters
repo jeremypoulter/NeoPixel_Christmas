@@ -33,6 +33,9 @@
     <ClInclude Include="Rainbow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="RainbowCycle.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NeoPixelPattern.cpp">
@@ -45,6 +48,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Rainbow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RainbowCycle.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

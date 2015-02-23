@@ -1,3 +1,4 @@
+#include "RainbowCycle.h"
 #include "Rainbow.h"
 #include "TheaterChase.h"
 #include "ColourWipe.h"
@@ -28,12 +29,14 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIN, NEO_GRB + NEO_KHZ800);
 ColourWipe colourWipe = ColourWipe(&strip);
 TheaterChase theaterChase = TheaterChase(&strip);
 Rainbow rainbow = Rainbow(&strip);
+RainbowCycle rainbowCycle = RainbowCycle(&strip);
 
 NeoPixelPattern *patterns[] = 
 {
   &colourWipe,
   &theaterChase,
-  &rainbow
+  &rainbow,
+  &rainbowCycle
 };
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
