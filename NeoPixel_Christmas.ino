@@ -1,3 +1,4 @@
+#include "Off.h"
 #include "RainbowCycle.h"
 #include "Rainbow.h"
 #include "TheaterChase.h"
@@ -9,7 +10,7 @@
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 
-#define PIN     6
+#define PIN     12
 #define PIXELS  5
 
 // Parameter 1 = number of pixels in strip
@@ -26,6 +27,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIN, NEO_GRB + NEO_KHZ800);
 // and minimize distance between Arduino and first pixel.  Avoid connecting
 // on a live circuit...if you must, connect GND first.
 
+Off off = Off(&strip);
 ColourWipe colourWipe = ColourWipe(&strip);
 TheaterChase theaterChase = TheaterChase(&strip);
 Rainbow rainbow = Rainbow(&strip);
@@ -33,6 +35,7 @@ RainbowCycle rainbowCycle = RainbowCycle(&strip);
 
 NeoPixelPattern *patterns[] = 
 {
+  &off,
   &colourWipe,
   &theaterChase,
   &rainbow,
@@ -41,7 +44,7 @@ NeoPixelPattern *patterns[] =
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
 
-ButtonEvent buttonEvent(0, FALLING);
+ButtonEvent buttonEvent(0, FALLING, 100);
 
 class SwitchPattern : public Task
 {
@@ -77,6 +80,8 @@ unsigned long SwitchPattern::loop(WakeReason reason)
     if (++pattern >= numberPatterns) {
       pattern = 0;
     }
+    Serial.print("Pattern ");
+    Serial.println(pattern);
     MicroTasks.startTask(patterns[pattern]);
   }
 
@@ -94,6 +99,8 @@ void setup()
   if (F_CPU == 16000000) clock_prescale_set(clock_div_1);
 #endif
   // End of trinket special code
+
+  Serial.begin(115200);
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'

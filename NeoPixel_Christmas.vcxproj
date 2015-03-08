@@ -80,6 +80,7 @@
   <ItemGroup>
     <ClInclude Include="ColourWipe.h" />
     <ClInclude Include="NeoPixelPattern.h" />
+    <ClInclude Include="Off.h" />
     <ClInclude Include="Rainbow.h" />
     <ClInclude Include="RainbowCycle.h" />
     <ClInclude Include="TheaterChase.h" />
@@ -88,6 +89,7 @@
   <ItemGroup>
     <ClCompile Include="ColourWipe.cpp" />
     <ClCompile Include="NeoPixelPattern.cpp" />
+    <ClCompile Include="Off.cpp" />
     <ClCompile Include="Rainbow.cpp" />
     <ClCompile Include="RainbowCycle.cpp" />
     <ClCompile Include="TheaterChase.cpp" />
