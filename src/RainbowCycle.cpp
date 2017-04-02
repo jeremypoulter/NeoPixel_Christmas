@@ -1,10 +1,10 @@
-// 
-// 
-// 
+//
+//
+//
 
 #include "RainbowCycle.h"
 
-unsigned long RainbowCycle::loop(WakeReason reason)
+unsigned long RainbowCycle::loop(MicroTasks::WakeReason reason)
 {
   for (uint16_t i = 0; i < strip->numPixels(); i++) {
     strip->setPixelColor(i, Wheel(((i * 256 / strip->numPixels()) + j) & 255));

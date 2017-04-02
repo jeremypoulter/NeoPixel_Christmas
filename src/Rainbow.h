@@ -21,13 +21,12 @@ class Rainbow : public NeoPixelPattern
 
   public:
     Rainbow(Adafruit_NeoPixel *strip) :
-      wait(20), j(0), NeoPixelPattern(strip) 
+      NeoPixelPattern(strip), wait(20), j(0) 
     {
     }
 
     void setup();
-    virtual unsigned long loop(WakeReason reason);
+    virtual unsigned long loop(MicroTasks::WakeReason reason);
 };
 
 #endif
-

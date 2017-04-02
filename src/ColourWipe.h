@@ -23,14 +23,13 @@ class ColourWipe : public NeoPixelPattern
 
   public:
     ColourWipe(Adafruit_NeoPixel *strip) :
-      pixel(0), wait(50), index(0),
-      NeoPixelPattern(strip)
+      NeoPixelPattern(strip),
+      pixel(0), wait(50), index(0)
     {
     }
 
     void setup();
-    unsigned long loop(WakeReason reason);
+    unsigned long loop(MicroTasks::WakeReason reason);
 };
 
 #endif
-

@@ -23,7 +23,7 @@ class Off : public NeoPixelPattern
 
     void setup() {
     }
-    unsigned long loop(WakeReason reason)
+    unsigned long loop(MicroTasks::WakeReason reason)
     {
       uint32_t col = strip->Color(0, 0, 0);
       for (uint16_t i = 0; i < strip->numPixels(); i++) {
@@ -36,4 +36,3 @@ class Off : public NeoPixelPattern
 };
 
 #endif
-

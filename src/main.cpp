@@ -5,13 +5,13 @@
 #include "ColourWipe.h"
 #include "NeoPixelPattern.h"
 
-#include <MicroTasks/MicroTasks.h>
-#include <MicroTasks/ButtonEvent.h>
+#include <MicroTasks.h>
+#include <MicroTasksButtonEvent.h>
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 
-#define PIN     12
-#define PIXELS  5
+#define PIN     4
+#define PIXELS  50
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -33,7 +33,7 @@ TheaterChase theaterChase = TheaterChase(&strip);
 Rainbow rainbow = Rainbow(&strip);
 RainbowCycle rainbowCycle = RainbowCycle(&strip);
 
-NeoPixelPattern *patterns[] = 
+NeoPixelPattern *patterns[] =
 {
   &off,
   &colourWipe,
@@ -44,23 +44,23 @@ NeoPixelPattern *patterns[] =
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
 
-ButtonEvent buttonEvent(0, FALLING, 100);
+MicroTasks::ButtonEvent buttonEvent(1, FALLING, 100);
 
-class SwitchPattern : public Task
+class SwitchPattern : public MicroTasks::Task
 {
   private:
     int pattern;
-    EventListener buttonEventListener;
+    MicroTasks::EventListener buttonEventListener;
 
   public:
     SwitchPattern();
 
     void setup();
-    unsigned long loop(WakeReason reason);
+    unsigned long loop(MicroTasks::WakeReason reason);
 };
 
 SwitchPattern::SwitchPattern() :
-  pattern(0), buttonEventListener(this), Task()
+  Task(), pattern(0), buttonEventListener(this)
 {
 }
 
@@ -69,30 +69,30 @@ void SwitchPattern::setup()
   buttonEvent.Register(&buttonEventListener);
   buttonEvent.Attach();
 
-  MicroTasks.startTask(patterns[pattern]);
+  MicroTask.startTask(patterns[pattern]);
 }
 
-unsigned long SwitchPattern::loop(WakeReason reason)
+unsigned long SwitchPattern::loop(MicroTasks::WakeReason reason)
 {
   if (WakeReason_Event == reason &&  buttonEvent.IsTriggered())
   {
-    MicroTasks.stopTask(patterns[pattern]);
+    MicroTask.stopTask(patterns[pattern]);
     if (++pattern >= numberPatterns) {
       pattern = 0;
     }
     Serial.print("Pattern ");
     Serial.println(pattern);
-    MicroTasks.startTask(patterns[pattern]);
+    MicroTask.startTask(patterns[pattern]);
   }
 
   // return when we next want to be called
-  return MicroTasks.Infinate | MicroTasks.WaitForEvent;
+  return MicroTask.Infinate | MicroTask.WaitForEvent;
 }
 
 SwitchPattern switchPattern = SwitchPattern();
 
 
-void setup() 
+void setup()
 {
   // This is for Trinket 5V 16MHz, you can remove these three lines if you are not using a Trinket
 #if defined (__AVR_ATtiny85__)
@@ -105,11 +105,11 @@ void setup()
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
 
-  // Start our task 
-  MicroTasks.startTask(&switchPattern);
+  // Start our task
+  MicroTask.startTask(&switchPattern);
 }
 
 void loop() {
   // Update the tasks state
-  MicroTasks.update();
+  MicroTask.update();
 }

@@ -26,14 +26,13 @@ class TheaterChase : public NeoPixelPattern
 
   public:
     TheaterChase(Adafruit_NeoPixel *strip) :
-      numberCycles(0), wait(50), colour(0), q(0),
-      NeoPixelPattern(strip)
+      NeoPixelPattern(strip),
+      numberCycles(0), wait(50), colour(0), q(0)
     {
     }
 
     void setup();
-    unsigned long loop(WakeReason reason);
+    unsigned long loop(MicroTasks::WakeReason reason);
 };
 
 #endif
-

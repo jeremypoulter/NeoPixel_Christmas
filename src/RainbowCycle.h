@@ -21,8 +21,7 @@ class RainbowCycle : public Rainbow
     {
     }
 
-    unsigned long loop(WakeReason reason);
+    unsigned long loop(MicroTasks::WakeReason reason);
 };
 
 #endif
-

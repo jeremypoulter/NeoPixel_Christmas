@@ -1,6 +1,6 @@
-// 
-// 
-// 
+//
+//
+//
 
 #include "ColourWipe.h"
 
@@ -19,9 +19,9 @@ void ColourWipe::setup()
   index = 0;
 }
 
-unsigned long ColourWipe::loop(WakeReason reason)
+unsigned long ColourWipe::loop(MicroTasks::WakeReason reason)
 {
-  // Update the state  
+  // Update the state
   if (pixel >= strip->numPixels())
   {
     pixel = 0;

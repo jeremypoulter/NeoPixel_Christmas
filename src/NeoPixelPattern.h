@@ -9,10 +9,10 @@
   #include "WProgram.h"
 #endif
 
-#include "MicroTasks/Task.h"
-#include "Adafruit_NeoPixel/Adafruit_NeoPixel.h"
+#include <MicroTasksTask.h>
+#include <Adafruit_NeoPixel.h>
 
-class NeoPixelPattern : public Task
+class NeoPixelPattern : public MicroTasks::Task
 {
   protected:
     Adafruit_NeoPixel *strip;
@@ -24,4 +24,3 @@ class NeoPixelPattern : public Task
 };
 
 #endif
-

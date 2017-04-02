@@ -1,6 +1,6 @@
-// 
-// 
-// 
+//
+//
+//
 
 #include "TheaterChase.h"
 
@@ -20,14 +20,14 @@ void TheaterChase::setup()
   colour = 0;
 }
 
-unsigned long TheaterChase::loop(WakeReason reason)
+unsigned long TheaterChase::loop(MicroTasks::WakeReason reason)
 {
   // turn every third pixel off
-  for (int i = 0; i < strip->numPixels(); i = i + 3) {
+  for (uint32_t i = 0; i < strip->numPixels(); i = i + 3) {
     strip->setPixelColor(i + q, 0);
   }
 
-  // Update the state  
+  // Update the state
   if (++q >= 3)
   {
     q = 0;
@@ -41,7 +41,7 @@ unsigned long TheaterChase::loop(WakeReason reason)
   }
 
   // turn every third pixel on
-  for (int i = 0; i < strip->numPixels(); i = i + 3) {
+  for (uint32_t i = 0; i < strip->numPixels(); i = i + 3) {
     strip->setPixelColor(i + q, colours[colour]);
   }
   strip->show();

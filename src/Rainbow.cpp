@@ -1,6 +1,6 @@
-// 
-// 
-// 
+//
+//
+//
 
 #include "Rainbow.h"
 
@@ -9,7 +9,7 @@ void Rainbow::setup()
   j = 0;
 }
 
-unsigned long Rainbow::loop(WakeReason reason)
+unsigned long Rainbow::loop(MicroTasks::WakeReason reason)
 {
   for (uint16_t i = 0; i < strip->numPixels(); i++) {
     strip->setPixelColor(i, Wheel((i + j) & 255));
@@ -23,7 +23,7 @@ unsigned long Rainbow::loop(WakeReason reason)
   return wait;
 }
 
-uint32_t Rainbow::Wheel(byte WheelPos) 
+uint32_t Rainbow::Wheel(byte WheelPos)
 {
   WheelPos = 255 - WheelPos;
   if (WheelPos < 85) {
@@ -38,4 +38,3 @@ uint32_t Rainbow::Wheel(byte WheelPos)
     return strip->Color(WheelPos * 3, 255 - WheelPos * 3, 0);
   }
 }
-
