@@ -10,8 +10,19 @@
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
 
-#define PIN     4
+#ifndef BUTTON_PIN
+#define BUTTON_PIN    3
+#endif
+
+#ifndef PIXEL_PIN
+#define PIXEL_PIN     4
+#endif
+
+#ifndef PIXELS
 #define PIXELS  50
+#endif
+
+#define BUTTON_INT    (BUTTON_PIN - 2)
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -20,7 +31,7 @@
 //   NEO_KHZ400  400 KHz (classic 'v1' (not v2) FLORA pixels, WS2811 drivers)
 //   NEO_GRB     Pixels are wired for GRB bitstream (most NeoPixel products)
 //   NEO_RGB     Pixels are wired for RGB bitstream (v1 FLORA pixels, not v2)
-Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIN, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ800);
 
 // IMPORTANT: To reduce NeoPixel burnout risk, add 1000 uF capacitor across
 // pixel power leads, add 300 - 500 Ohm resistor on first pixel's data input
@@ -44,7 +55,7 @@ NeoPixelPattern *patterns[] =
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
 
-MicroTasks::ButtonEvent buttonEvent(1, FALLING, 100);
+MicroTasks::ButtonEvent buttonEvent(BUTTON_INT, FALLING, 100);
 
 class SwitchPattern : public MicroTasks::Task
 {
