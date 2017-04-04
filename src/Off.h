@@ -22,16 +22,15 @@ class Off : public NeoPixelPattern
     }
 
     void setup() {
-    }
-    unsigned long loop(MicroTasks::WakeReason reason)
-    {
       uint32_t col = strip->Color(0, 0, 0);
       for (uint16_t i = 0; i < strip->numPixels(); i++) {
         strip->setPixelColor(i, col);
       }
       strip->show();
-
-      return 50;
+    }
+    unsigned long loop(MicroTasks::WakeReason reason)
+    {
+      return MicroTask.Infinate;
     }
 };
 
