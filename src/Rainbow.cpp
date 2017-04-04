@@ -12,7 +12,7 @@ void Rainbow::setup()
 unsigned long Rainbow::loop(MicroTasks::WakeReason reason)
 {
   for (uint16_t i = 0; i < strip->numPixels(); i++) {
-    strip->setPixelColor(i, Wheel((i + j) & 255));
+    strip->setPixelColor(i, Wheel(j));
   }
   strip->show();
 
