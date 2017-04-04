@@ -18,8 +18,12 @@
 #define PIXEL_PIN     4
 #endif
 
+#ifndef LED_PIN
+#define LED_PIN       13
+#endif
+
 #ifndef PIXELS
-#define PIXELS  50
+#define PIXELS  300
 #endif
 
 #define BUTTON_INT    (BUTTON_PIN - 2)
@@ -43,6 +47,7 @@ ColourWipe colourWipe = ColourWipe(&strip);
 TheaterChase theaterChase = TheaterChase(&strip);
 Rainbow rainbow = Rainbow(&strip);
 RainbowCycle rainbowCycle = RainbowCycle(&strip);
+//StaticColour staticColour = StaticColour(&strip);
 
 NeoPixelPattern *patterns[] =
 {
@@ -55,7 +60,7 @@ NeoPixelPattern *patterns[] =
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
 
-MicroTasks::ButtonEvent buttonEvent(BUTTON_INT, FALLING, 100);
+MicroTasks::ButtonEvent buttonEvent(BUTTON_INT, FALLING, 200);
 
 class SwitchPattern : public MicroTasks::Task
 {
@@ -91,8 +96,8 @@ unsigned long SwitchPattern::loop(MicroTasks::WakeReason reason)
     if (++pattern >= numberPatterns) {
       pattern = 0;
     }
-    Serial.print("Pattern ");
-    Serial.println(pattern);
+//    Serial.print("Pattern ");
+//    Serial.println(pattern);
     MicroTask.startTask(patterns[pattern]);
   }
 
@@ -111,7 +116,10 @@ void setup()
 #endif
   // End of trinket special code
 
-  Serial.begin(115200);
+//   Serial.begin(115200);
+
+  pinMode(BUTTON_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
@@ -123,4 +131,5 @@ void setup()
 void loop() {
   // Update the tasks state
   MicroTask.update();
+  digitalWrite(LED_PIN, !digitalRead(BUTTON_PIN));
 }
