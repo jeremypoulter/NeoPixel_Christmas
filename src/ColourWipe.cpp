@@ -17,6 +17,11 @@ void ColourWipe::setup()
 
   pixel = 0;
   index = 0;
+
+  wait = 500 / strip->numPixels();
+  if(wait < 5) {
+    wait = 5;
+  }
 }
 
 unsigned long ColourWipe::loop(MicroTasks::WakeReason reason)
