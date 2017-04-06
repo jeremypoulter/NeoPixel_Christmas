@@ -5,31 +5,12 @@
 #include "ColourWipe.h"
 #include "Sparkle.h"
 #include "NeoPixelPattern.h"
+#include "Config.h"
 
 #include <MicroTasks.h>
 #include <MicroTasksButtonEvent.h>
 #include <Adafruit_NeoPixel.h>
 #include <avr/power.h>
-
-#ifndef BUTTON_PIN
-#define BUTTON_PIN    3
-#endif
-
-#ifndef PIXEL_PIN
-#define PIXEL_PIN     4
-#endif
-
-#ifndef LED_PIN
-#define LED_PIN       13
-#endif
-
-#ifndef PIXELS
-#define PIXELS  300
-#endif
-
-#ifndef BRIGHTNESS
-#define BRIGHTNESS            255   // NeoPixel brightness
-#endif
 
 #define BUTTON_INT    (BUTTON_PIN - 2)
 
@@ -55,22 +36,46 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(PIXELS, PIXEL_PIN, NEO_GRB + NEO_KHZ
 // and minimize distance between Arduino and first pixel.  Avoid connecting
 // on a live circuit...if you must, connect GND first.
 
+#ifdef ENABLE_OFF
 Off off = Off(&strip);
+#endif
+#ifdef ENABLE_COLOUR_WIPE
 ColourWipe colourWipe = ColourWipe(&strip);
+#endif
+#ifdef ENABLE_THEATER_CHASE
 TheaterChase theaterChase = TheaterChase(&strip);
+#endif
+#ifdef ENABLE_RAINBOW
 Rainbow rainbow = Rainbow(&strip);
+#endif
+#ifdef ENABLE_RAINBOW_CHASE
 RainbowCycle rainbowCycle = RainbowCycle(&strip);
+#endif
+#ifdef ENABLE_SPARKLE
 Gradient sparkleColour = Gradient(ColorGamma(255, 255, 0), ColorGamma(0, 255, 255));  // Blue-Cyan - Red-Magenta
 Sparkle sparkle = Sparkle(&strip, 0.1, 0.5, &sparkleColour);
+#endif
 
 NeoPixelPattern *patterns[] =
 {
+#ifdef ENABLE_OFF
   &off,
+#endif
+#ifdef ENABLE_COLOUR_WIPE
   &colourWipe,
+#endif
+#ifdef ENABLE_THEATER_CHASE
   &theaterChase,
+#endif
+#ifdef ENABLE_RAINBOW
   &rainbow,
+#endif
+#ifdef ENABLE_RAINBOW_CHASE
   &rainbowCycle,
-  &sparkle
+#endif
+#ifdef ENABLE_SPARKLE
+  &sparkle,
+#endif
 };
 
 const int numberPatterns = ARRAY_ITEMS(patterns);

@@ -32,5 +32,5 @@ unsigned long Sparkle::loop(MicroTasks::WakeReason reason)
   strip->show();
 
   // Come back in a bit
-  return 50;
+  return 0;
 }
