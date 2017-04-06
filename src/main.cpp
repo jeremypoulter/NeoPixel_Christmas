@@ -3,6 +3,7 @@
 #include "Rainbow.h"
 #include "TheaterChase.h"
 #include "ColourWipe.h"
+#include "Sparkle.h"
 #include "NeoPixelPattern.h"
 
 #include <MicroTasks.h>
@@ -26,7 +27,19 @@
 #define PIXELS  300
 #endif
 
+#ifndef BRIGHTNESS
+#define BRIGHTNESS            255   // NeoPixel brightness
+#endif
+
 #define BUTTON_INT    (BUTTON_PIN - 2)
+
+#ifdef __AVR_ATtiny85__
+#include <SoftwareSerial.h>
+#define Serial SoftwareSerial
+#define SERIAL_BAUD 9600
+#else
+#define SERIAL_BAUD 115200
+#endif
 
 // Parameter 1 = number of pixels in strip
 // Parameter 2 = Arduino pin number (most are valid)
@@ -47,7 +60,8 @@ ColourWipe colourWipe = ColourWipe(&strip);
 TheaterChase theaterChase = TheaterChase(&strip);
 Rainbow rainbow = Rainbow(&strip);
 RainbowCycle rainbowCycle = RainbowCycle(&strip);
-//StaticColour staticColour = StaticColour(&strip);
+Gradient sparkleColour = Gradient(ColorGamma(255, 255, 0), ColorGamma(0, 255, 255));  // Blue-Cyan - Red-Magenta
+Sparkle sparkle = Sparkle(&strip, 0.1, 0.5, &sparkleColour);
 
 NeoPixelPattern *patterns[] =
 {
@@ -55,7 +69,8 @@ NeoPixelPattern *patterns[] =
   &colourWipe,
   &theaterChase,
   &rainbow,
-  &rainbowCycle
+  &rainbowCycle,
+  &sparkle
 };
 
 const int numberPatterns = ARRAY_ITEMS(patterns);
@@ -96,8 +111,8 @@ unsigned long SwitchPattern::loop(MicroTasks::WakeReason reason)
     if (++pattern >= numberPatterns) {
       pattern = 0;
     }
-//    Serial.print("Pattern ");
-//    Serial.println(pattern);
+    Serial.print("Pattern ");
+    Serial.println(pattern);
     MicroTask.startTask(patterns[pattern]);
   }
 
@@ -116,13 +131,14 @@ void setup()
 #endif
   // End of trinket special code
 
-//   Serial.begin(115200);
+  Serial.begin(SERIAL_BAUD);
 
   pinMode(BUTTON_PIN, INPUT);
   pinMode(LED_PIN, OUTPUT);
 
   strip.begin();
   strip.show(); // Initialize all pixels to 'off'
+  strip.setBrightness(BRIGHTNESS);
 
   // Start our task
   MicroTask.startTask(&switchPattern);
