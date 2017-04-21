@@ -24,10 +24,13 @@ void Sparkle::setup()
 unsigned long Sparkle::loop(MicroTasks::WakeReason reason)
 {
   float currentS = millis() / 1000.0;
-  for (uint16_t i=0; i<strip->numPixels(); ++i) {
-    float t = sin(2.0*PI*_frequencies[i % NUM_FREQ]*currentS);
+  for (uint16_t i=0; i < _n; ++i)
+  {
+    float t = sin(2.0*PI*_frequencies[i]*currentS);
     uint32_t color = colors->interpolate(t, -1.0, 1.0);
-    strip->setPixelColor(i, color);
+    for (uint16_t j=0; j < strip->numPixels(); j += _n) {
+      strip->setPixelColor(j + i, color);
+    }
   }
   strip->show();
 
